@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { BackendResponse } from '../common-models/response';
+import { UploadVideoResponse } from '../common-models/uploadVideoResponse';
+import { CommonService } from '../service/common.service';
+import { VideoService } from '../service/video.service';
 
 @Component({
   selector: 'upload-video',
@@ -9,6 +14,13 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
 export class UploadVideoComponent {
 
   public files: NgxFileDropEntry[] = [];
+  fileUploaded: boolean = false;
+  fileEntry : FileSystemFileEntry | undefined;
+
+  constructor(private videoService : VideoService, private commonService : CommonService,
+    private router: Router){
+
+  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -16,11 +28,12 @@ export class UploadVideoComponent {
 
       // Is it a file?
       if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
+        this.fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        this.fileEntry.file((file: File) => {
 
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
+          this.fileUploaded = true;
 
           /**
           // You could upload it like this:
@@ -53,5 +66,18 @@ export class UploadVideoComponent {
 
   public fileLeave(event : any){
     console.log(event);
+  }
+  uploadVideo(){
+    // upload video to backend
+    if(this.fileEntry != undefined){
+      console.log(this.fileEntry);
+    }
+   this.fileEntry?.file(file =>{
+    this.videoService.uploadVideo(file).subscribe(res =>{
+      // this.commonService.showAlert(res.message, 'success');
+        this.router.navigateByUrl("/save-video-details/" + res.videoId);
+      console.log("Video file Uploaded successfully");
+    })
+   });
   }
 }

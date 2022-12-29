@@ -1,0 +1,118 @@
+@import '../shared/scss/default_theme';
+
+
+:host {
+    //mixin for default scroll
+    @include default-vertical-scroll();
+}
+
+.header {
+    flex:  1 1 auto;
+    .logo-icon {
+        img {
+            width: 130px;
+        }
+        
+    }
+    .my-booking-span{
+        a{
+            font-weight: bold;
+            color: white;
+        }
+       
+    }
+    .login-span {
+        padding: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        a{
+            color: white;
+        }
+    }
+}
+.router-outlet {
+    margin-top: 60px;
+}
+.footer-main{
+    display: flex;
+    justify-content: space-around;
+    margin: 70px 0px;
+    .logo{
+        p{
+            margin: 17px 0px;
+            font-size: larger;
+            font-weight: 700;
+            color: #00496a;
+        }
+    }
+    ul{ 
+        padding-left: 10px;
+    }
+    h3 {
+        font-weight: 700;
+        text-align: center;
+
+    }
+    li {
+        font-weight: 500;
+        list-style-type: none;
+        line-height: 200%;
+        &:hover {
+            // text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+    .logo img{
+        width: 200px;
+    }
+    .socialDiv {
+        ul {
+            li {
+                list-style-type: none;
+                line-height: 200%;
+                img {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+
+.toolbar-single-row {
+    background: $jinisha-header-backclr;
+    height: 60px;
+}
+
+@media only screen and (max-width: 600px) {
+    .header {
+        .login-span {
+            display: none;
+        }
+    }
+    .footer-main {
+        flex-wrap: wrap;
+        .logo {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+    }
+}
+.heading{
+    display: flex;
+    justify-content: center;
+    h2{
+        font-size: 2rem;
+    }
+}
+.parentDiv{
+    display: flex;
+    justify-content: space-around;
+}
+.subtitle{
+    font-size: 20px;
+    font-weight: 700;
+}
