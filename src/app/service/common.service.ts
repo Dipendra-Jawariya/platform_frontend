@@ -28,4 +28,7 @@ export class CommonService {
     }
     
   }
+  showSuccess(msg:string){
+    this.toastr.success(msg);
+  }
 }
