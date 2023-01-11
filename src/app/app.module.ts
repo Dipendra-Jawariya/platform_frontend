@@ -1,6 +1,6 @@
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { HttpClientModule  } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,7 @@ import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -35,7 +36,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HeaderComponent,
     SaveVideoDetailsComponent
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     AppRoutingModule,
     FormsModule,
