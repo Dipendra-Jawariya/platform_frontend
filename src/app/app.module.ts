@@ -20,6 +20,7 @@ import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { VideoPlayerComponent } from './video-player/video-player.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -34,7 +35,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppComponent,
     UploadVideoComponent,
     HeaderComponent,
-    SaveVideoDetailsComponent
+    SaveVideoDetailsComponent,
+    VideoPlayerComponent
   ],
   imports: [ 
     BrowserModule,

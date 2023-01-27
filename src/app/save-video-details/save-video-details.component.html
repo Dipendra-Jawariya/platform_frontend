@@ -3,19 +3,19 @@
         Hi
     </div>
     <div fxFlex="30%">
-        <div class="mat-title">Add Video Metadata</div>
-        <form [formGroup] = "saveVideoDetailsForm">
+        <h1 class="mat-title">Add Video Metadata</h1>
+        <form [formGroup]="saveVideoDetailsForm">
             <mat-form-field appearance="fill">
-                <mat-label >Tite</mat-label>
+                <mat-label>Tite</mat-label>
                 <input matInput required [formControl]="title">
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Description</mat-label>
-                <input matInput required [formControl] ="description">
+                <input matInput required [formControl]="description">
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Video Status</mat-label>
-                <mat-select [formControl] = "videoStatus">
+                <mat-select [formControl]="videoStatus">
                     <mat-option value="PUBLIC">PUBLIC</mat-option>
                     <mat-option value="PRIVATE">PRIVATE</mat-option>
                 </mat-select>
@@ -24,45 +24,44 @@
             <mat-form-field class="example-chip-list" appearance="fill">
                 <mat-label>Tags</mat-label>
                 <mat-chip-grid #chipGrid aria-label="Add Tags">
-                  <mat-chip-row *ngFor="let tags of tags"
-                                (removed)="remove(tags)"
-                                [editable]="true"
-                                (edited)="edit(tags, $event)">
-                    {{tags}}
-                    <button matChipRemove [attr.aria-label]="'remove ' + tags">
-                      <mat-icon>cancel</mat-icon>
-                    </button>
-                  </mat-chip-row>
-                  <input placeholder="New fruit..."
-                         [matChipInputFor]="chipGrid"
-                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                         [matChipInputAddOnBlur]="addOnBlur"
-                         (matChipInputTokenEnd)="add($event)"/>
+                    <mat-chip-row *ngFor="let tags of tags" (removed)="remove(tags)" [editable]="true"
+                        (edited)="edit(tags, $event)">
+                        {{tags}}
+                        <button matChipRemove [attr.aria-label]="'remove ' + tags">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                    <input placeholder="New fruit..." [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)" />
                 </mat-chip-grid>
             </mat-form-field>
             <div>
                 <label for="inputGroupFile01">Upload Thumbnail:
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01"
-                           aria-describedby="inputGroupFileAddon01" (change)="onFileSelected($event)">
-                           <!-- //change directive which detect the changes -->
-                  </div>
-                  <br/>
-                  <div >
-                    <p>Selected File: {{selectedFileName}}</p>
-                  </div>
-                  <hr>
-                  <button mat-raised-button color="primary" type="submit" (click)="onUpload()">Upload</button>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01" (change)="onFileSelected($event)">
+                        <!-- //change directive which detect the changes -->
+                    </div>
+                    <br />
+                    <div *ngIf="fileSelected">
+                        <div>
+                            <p>Selected File: {{selectedFileName}}</p>
+                        </div>
+                        <hr>
+                        <button mat-raised-button color="primary" type="submit" (click)="onUpload()">Upload</button>
+                    </div>
                 </label>
-              </div>
-            <div class="btn">
-                <button type="submit" mat-raised-button color="primary">Save</button>
             </div>
-            
+            <div class="btn">
+                <button type="submit" mat-raised-button color="primary" (click)="saveVideo()">Save</button>
+            </div>
+
         </form>
     </div>
     <div fxFlex="30%">
         Video Player
+        <app-video-player [videoUrl] = "videoUrl"></app-video-player>
     </div>
     <div fxFlex="20%">
         Hi

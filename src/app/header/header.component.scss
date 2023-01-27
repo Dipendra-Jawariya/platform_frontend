@@ -5,7 +5,9 @@
     //mixin for default scroll
     @include default-vertical-scroll();
 }
-
+body {
+    margin: 0;
+  }
 .header {
     flex:  1 1 auto;
     .logo-icon {

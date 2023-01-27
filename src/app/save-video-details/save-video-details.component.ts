@@ -7,6 +7,9 @@ import { VideoService } from '../service/video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from '../service/common.service';
 import { BackendResponse } from '../common-models/response';
+import { HttpClient } from '@angular/common/http';
+import { VideoDto } from '../common-models/video-dto';
+import { Observable } from 'rxjs/internal/Observable';
 
 
 @Component({
@@ -22,15 +25,21 @@ export class SaveVideoDetailsComponent implements OnInit{
   selectedFile!: File;
   selectedFileName = ' ';
   videoId = '';
-
+  fileSelected = false;
+  videoUrl !:string; 
+  thumbnailUrl !: string
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
 
 
-  constructor(private activatedRoute : ActivatedRoute,private videoService : VideoService,private _snackBar: MatSnackBar
-    ,private commonService : CommonService){
+  constructor(private activatedRoute : ActivatedRoute,private videoService : VideoService, private commonService : CommonService){
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
+    this.videoService.getVideo(this.videoId).subscribe( data =>{
+      console.log(data);
+      this.videoUrl = data.videoUrl;
+      this.thumbnailUrl  = data.thumbnailUrl;
+    });
     this.saveVideoDetailsForm = new FormGroup({
       title : this.title,
       description : this.description,
@@ -80,6 +89,7 @@ export class SaveVideoDetailsComponent implements OnInit{
     //@ts-ignore
     this.selectedFile = event.target.files[0];
     this.selectedFileName = this.selectedFile.name;
+    this.fileSelected = true;
   }
 
   onUpload(){
@@ -91,5 +101,23 @@ export class SaveVideoDetailsComponent implements OnInit{
       this.commonService.showAlert("Thumbnail Upload Successful", 'success');
     })
   }
+
+  saveVideo(){
+    //make a call to videoService to make a http call to backend
+    const videoMetaData:VideoDto = {
+      "id" : this.videoId,
+      "title" : this.saveVideoDetailsForm.get('title')?.value,
+      "description" : this.saveVideoDetailsForm.get('description')?.value,
+      "tags" : this.tags,
+      "videoStatus" : this.saveVideoDetailsForm.get('videoStatus')?.value,
+      "videoUrl" : this.videoUrl,
+      "thumbnailUrl": this.thumbnailUrl,
+    }
+    this.videoService.saveVideo(videoMetaData).subscribe(data => {
+      this.commonService.showAlert("Video MetaData Updated Successfully", 'success');
+    });
+  }
+  
+  
 
 }
