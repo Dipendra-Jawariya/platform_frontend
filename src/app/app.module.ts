@@ -21,6 +21,7 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { VideoPlayerComponent } from './video-player/video-player.component';
+import { AuthConfigModule } from './auth/auth-config.module';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -55,7 +56,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     VgBufferingModule,
     ToastrModule.forRoot({
       positionClass :'toast-top-right'
-    })
+    }),
+    AuthConfigModule
   ],
  providers: [ToastrService,
     {
