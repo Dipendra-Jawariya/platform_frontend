@@ -2,7 +2,7 @@ import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { HttpClientModule  } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS  } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
@@ -22,6 +22,8 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { AuthConfigModule } from './auth/auth-config.module';
+import { AuthInterceptor, AuthModule } from 'angular-auth-oidc-client';
+import { VideoDetailComponent } from './video-detail/video-detail.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -37,7 +39,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     UploadVideoComponent,
     HeaderComponent,
     SaveVideoDetailsComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    VideoDetailComponent
   ],
   imports: [ 
     BrowserModule,
@@ -57,13 +60,19 @@ export class MyHammerConfig extends HammerGestureConfig {
     ToastrModule.forRoot({
       positionClass :'toast-top-right'
     }),
-    AuthConfigModule
+    AuthConfigModule,
+    //  AuthModule.forRoot(),
+    HttpClientModule,
   ],
  providers: [ToastrService,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
-    }],
+    },
+    { 
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true 
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
