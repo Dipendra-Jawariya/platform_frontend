@@ -4,12 +4,8 @@ import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/ma
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../service/video.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from '../service/common.service';
-import { BackendResponse } from '../common-models/response';
-import { HttpClient } from '@angular/common/http';
 import { VideoDto } from '../common-models/video-dto';
-import { Observable } from 'rxjs/internal/Observable';
 
 
 @Component({
@@ -31,7 +27,7 @@ export class SaveVideoDetailsComponent implements OnInit{
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   tags: string[] = [];
-
+  videoAvailable : boolean = false;
 
   constructor(private activatedRoute : ActivatedRoute,private videoService : VideoService, private commonService : CommonService){
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
@@ -39,6 +35,7 @@ export class SaveVideoDetailsComponent implements OnInit{
       console.log(data);
       this.videoUrl = data.videoUrl;
       this.thumbnailUrl  = data.thumbnailUrl;
+      this.videoAvailable = true
     });
     this.saveVideoDetailsForm = new FormGroup({
       title : this.title,

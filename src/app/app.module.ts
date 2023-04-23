@@ -24,6 +24,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
 import { AuthConfigModule } from './auth/auth-config.module';
 import { AuthInterceptor, AuthModule } from 'angular-auth-oidc-client';
 import { VideoDetailComponent } from './video-detail/video-detail.component';
+import { AuthService } from './auth/auth.service';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -65,13 +66,11 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
   ],
  providers: [ToastrService,
+    AuthService ,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
-    },
-    { 
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true 
-    },
+    }
   ],
   bootstrap: [AppComponent]
 })

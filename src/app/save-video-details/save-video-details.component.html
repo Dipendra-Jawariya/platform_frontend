@@ -31,7 +31,7 @@
                             <mat-icon>cancel</mat-icon>
                         </button>
                     </mat-chip-row>
-                    <input placeholder="New fruit..." [matChipInputFor]="chipGrid"
+                    <input placeholder="" [matChipInputFor]="chipGrid"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                         (matChipInputTokenEnd)="add($event)" />
                 </mat-chip-grid>
@@ -61,7 +61,7 @@
     </div>
     <div fxFlex="30%">
         Video Player
-        <app-video-player [videoUrl] = "videoUrl"></app-video-player>
+        <app-video-player *ngIf="videoAvailable" [videoUrl] = "videoUrl"></app-video-player>
     </div>
     <div fxFlex="20%">
         Hi

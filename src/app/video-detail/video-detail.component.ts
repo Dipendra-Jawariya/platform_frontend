@@ -22,7 +22,7 @@ export class VideoDetailComponent {
       this.videoUrl = data.videoUrl;
       this.videoTitle = data.title;
       this.videDescription = data.description;
-      this.tags = data.tags; 
+      this.tags = data.tags;
       this.videoAvailable = true;
     });
   }
