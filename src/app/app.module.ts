@@ -2,7 +2,7 @@ import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { HttpClientModule, HTTP_INTERCEPTORS  } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpResponse, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent  } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
@@ -22,9 +22,12 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { AuthConfigModule } from './auth/auth-config.module';
-import { AuthInterceptor, AuthModule } from 'angular-auth-oidc-client';
+import {AuthInterceptor} from './interceptor/auth.interceptor';
+
 import { VideoDetailComponent } from './video-detail/video-detail.component';
 import { AuthService } from './auth/auth.service';
+import { Observable } from 'rxjs';
+import { AuthModule } from 'angular-auth-oidc-client';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -34,6 +37,21 @@ export class MyHammerConfig extends HammerGestureConfig {
     'rotate': { enable: false }
   };
 }
+
+@Injectable()
+export class CorsInterceptor implements HttpInterceptor {
+
+constructor() {}
+
+intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  req.headers.append('Access-Control-Allow-Origin', '*');
+  req.headers.append('Access-Control-Allow-Methods', 'GET, POST');
+  return next.handle(req);
+}
+
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +80,7 @@ export class MyHammerConfig extends HammerGestureConfig {
       positionClass :'toast-top-right'
     }),
     AuthConfigModule,
-    //  AuthModule.forRoot(),
+    AuthModule,
     HttpClientModule,
   ],
  providers: [ToastrService,
@@ -70,6 +88,11 @@ export class MyHammerConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
+    },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass :AuthInterceptor ,
+      multi : true
     }
   ],
   bootstrap: [AppComponent]

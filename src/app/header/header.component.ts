@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,12 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit{
+scroll(arg0: string) {
+throw new Error('Method not implemented.');
+}
   isAuthenticated : boolean = false;
 
-  constructor(private  oidcSecurityService: OidcSecurityService){
+  constructor(private  oidcSecurityService: OidcSecurityService,private commonService : CommonService){
 
   }
   ngOnInit(): void {
@@ -18,17 +22,16 @@ export class HeaderComponent implements OnInit{
     })
   }
 
-  // logout() {
-  //   // this.router.navigate(['/auth/admin-login']);
-  //   // this.authService.logout();
-  // }
   login() {
     this.oidcSecurityService.authorize();
   }
 
   logout() {
     //will log off and clear the tokens
-    this.oidcSecurityService.logoffAndRevokeTokens().subscribe((result) => console.log(result));
+    this.oidcSecurityService.logoffAndRevokeTokens().subscribe((result) =>{
+        //info
+        this.commonService.showAlert("User Logged Out", 'info');
+    })
   }
 
 }

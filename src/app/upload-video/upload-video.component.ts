@@ -75,7 +75,7 @@ export class UploadVideoComponent {
    this.fileEntry?.file(file =>{
     this.videoService.uploadVideo(file).subscribe(res =>{
       this.commonService.showAlert("Video Uploaded", 'success');
-        this.router.navigateByUrl("/save-video-details/" + res.videoId);
+      this.router.navigateByUrl("/save-video-details/" + res.videoId);
       console.log("Video file Uploaded successfully");
     })
    });

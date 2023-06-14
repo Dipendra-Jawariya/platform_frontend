@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {Router} from "@angular/router";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import * as auth0 from 'auth0-js';
 
 @Injectable({
@@ -57,6 +57,9 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('xyz', 'xyz');
+    console.log('set session value');
+    
   }
 
   public logout(): void {
@@ -72,7 +75,14 @@ export class AuthService {
     return localStorage.getItem('access_token') !== null;
   }
 
-  public getUserId(): string|null {
+  public getUserId(): string | null {
     return localStorage.getItem('userId');
   }
+  public getToken(): string | null {
+    console.log(localStorage.getItem('id_token'));
+    
+    return localStorage.getItem('id_token');
+
+  }
+
 }
